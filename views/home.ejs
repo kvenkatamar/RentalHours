@@ -3,14 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/images/logo.ico" type="image/x-icon">
     <title>RentalHours</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@700&display=swap');
       body {
-        font-family: "Arial", sans-serif;
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -23,34 +24,45 @@
 
       .cover-page {
         position: relative;
-        height: 80vh;
-        background: url("/images/batminton.jpg") center/cover no-repeat;
+        height: 100vh;
+        background: url("/images/cover7.jpg") center/cover no-repeat;
         color: #fff;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        text-align: center;
+        align-items: left;
+        padding-left: 45px;
       }
 
       .cover-text {
-        font-size: 2em;
+        font-size: 1.8rem;
         margin-bottom: 20px;
+        width: 75%;
+        font-family: 'IBM Plex Serif', serif;
+
         /* font-weight: bolder; */
       }
 
       .cover-text h1 {
-        font-size: 2.5em;
+        font-size: 5rem;
+        
       }
 
       .book-button {
+        width: fit-content;
         padding: 10px 20px;
-        font-size: 1.5em;
+        font-size: 1.5rem;
         background-color: #28a745;
         color: #fff;
         border: none;
-        border-radius: 5px;
+        border-radius: 12px;
         cursor: pointer;
+        font-weight: bold;
+      }
+
+      .book-button:hover{
+        transform: scale(1.1);
+        transition: all ease-out 0.2s;
       }
 
       .features-container {
@@ -94,7 +106,7 @@
 
     <div class="cover-page">
       <div class="cover-text">
-        <h1>Welcome to Our Booking Platform</h1>
+        <h1>Welcome to Rental Hours</h1>
         <p>Find the perfect venue to play and enjoy your favorite sports!</p>
       </div>
       <button class="book-button" onclick="window.location.href = '/venues'">Book Now</button>

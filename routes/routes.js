@@ -8,11 +8,19 @@ const User = require("../models/userModel");
 const Venue = require("../models/venueModel");
 
 router.get("/", (req, res) => {
-  // res.send('WELCOME TO OUR SERVER')
   res.render("home");
 });
 
-router.get("/register", async (req, res) => {
+const isLoggedIn = (req, res, next) => {
+  if (req.session.isAuth) return next();
+  res.render("login");
+};
+
+
+router.get("/register", (req, res) => {
+  if(req.session.isAuth){
+    res.redirect("/");
+  }
   res.render("register");
 });
 
@@ -53,8 +61,8 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/login", (req, res) => {
-  res.render("login");
+router.get("/login", isLoggedIn, (req, res) => {
+  res.redirect("/");
 });
 
 router.post("/login", async (req, res) => {
@@ -76,10 +84,7 @@ router.post("/login", async (req, res) => {
           // Add other user details as needed
         };
         req.session.isAuth = true;
-        res.render("myprofile", {
-          firstName: foundUser.firstName,
-          lastName: foundUser.lastName,
-        });
+        res.redirect(`/myprofile`);
       } else {
         res.redirect("/login");
       }
@@ -91,11 +96,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-const isLoggedIn = (req, res, next) => {
-  if (req.session.isAuth) return next();
-  res.redirect("/login");
-};
-
 router.get("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -105,20 +105,7 @@ router.get("/logout", (req, res) => {
   });
 });
 
-// Session
-
-// router.get('/session', (req, res) => {
-//     req.session.isAuth = true;
-//     console.log(req.session);
-//     console.log(req.session.id);
-//     res.send("Hello This is a session route");
-// })
-
 // ===================================================================
-
-router.get("/search", (req, res) => {
-  res.render("search");
-});
 
 // myprofile route
 router.get("/myprofile", isLoggedIn, (req, res) => {
@@ -126,35 +113,58 @@ router.get("/myprofile", isLoggedIn, (req, res) => {
   res.render("myprofile", { user: req.session.user });
 });
 
-// For phone number authentication
-// router.post('/myprofile', (req, res) => {
-//     // Create a new user
-//     res.send('This is my profile')
-//     // If not logged In -> redirect to loginPage
-// })
-
-router.get("/myprofile/bookings", (req, res) => {
+router.get("/myprofile/bookings", isLoggedIn, (req, res) => {
   res.render("bookings");
 });
 
-router.get("/myprofile/edit", (req, res) => {
+router.get("/myprofile/edit", isLoggedIn, (req, res) => {
   res.send("Edit Your Profile");
 });
 
-router.post("/myprofile/edit", (req, res) => {
+router.post("/myprofile/edit", isLoggedIn, (req, res) => {
   // Update the details of the user
   res.send("Your Profile has been updated");
 });
 
-router.get("/myprofile/feedback", (req, res) => {
+router.get("/myprofile/feedback", isLoggedIn, (req, res) => {
   res.render("feedback");
   //   res.send("Your feedback matters to us a lot");
 });
 
-router.get("/venues", (req, res) => {
-  res.render("selectCity");
-  // If city selected -> load '/venues/:city' route
+
+// =======================================================================
+
+router.get("/book", (req, res) => {
+  res.render("book");
+  // res.send('These are all the venues')
 });
+
+router.get("/venues", async (req, res) => {
+  const venueid = req.query.venue_id; // Assuming 'id' is the query parameter you're checking
+  console.log(venueid);
+
+  if (!venueid) {
+    // If no query parameter is present, render "selectCity"
+    return res.render("selectCity");
+  }
+
+  try {
+    // Assuming 'id' is the unique identifier for Venue
+    const venue = await Venue.findOne({ _id: venueid });
+    console.log(venue);
+    const user = await User.findOne({ _id: venue.user_id });
+
+    console.log(user);
+
+    // Render "info" with venue and user data
+    return res.render("info", { venue, user });
+  } catch (error) {
+    // Handle errors, e.g., Venue or User not found
+    console.error(error);
+    return res.status(500).send("Internal Server Error");
+  }
+});
+
 
 router.post("/venues", (req, res) => {
   //   console.log(req.body);
@@ -170,7 +180,7 @@ router.get("/venues/:city/all", async (req, res) => {
   // Get all the BSON object from the database to render them on frontend
   try {
     const venues = await Venue.find({ city });
-    // console.log(typeof(venues));
+    console.log(venues);
 
     res.render("book", { venues });
   } catch (error) {
@@ -185,72 +195,22 @@ router.get("/venues/:city/:sports", (req, res) => {
   // res.send('These are all the venues in <city> that has <sports>')
 });
 
-router.get("/venues/:city/:venue", (req, res) => {
-  // venue = venue.split('+')
-  res.render("book");
-  // res.send('These are all the details of the <venue>')
-});
+router.get("/booking", (req, res) => {
+  const venue = req.query.venue;
+  console.log(venue);
+  res.render('payment', {venue: venue});
+})
 
 // Coaching
 
-router.get("/coachings/:city/all", (req, res) => {
-  // change the url to coachings/:city/all
-  res.render("book");
-  // res.send('These are all the coachings in <city>')
-});
-
-router.get("/coachings/:city/:sports", (req, res) => {
-  res.render("book");
-  // res.send('These are all the coachings in <city> that has <sports>')
-});
-
-router.get("/coachings/:city/:coaching", (req, res) => {
-  res.render("book");
-  // res.send('These are all the details of the <coaching>')
-});
-
 // Events
 
-router.get("/events/:city/all", (req, res) => {
-  // change the url to events/:city/all
-  res.render("book");
-  // res.send('These are all the events in <city>')
-});
+// ===================================================================
 
-router.get("/events/:city/:sports", (req, res) => {
-  res.render("book");
-  // res.send('These are all the events in <city> that has <sports>')
-});
-
-router.get("/events/:city/:event", (req, res) => {
-  res.render("book");
-  // res.send('These are all the details of the <event>')
-});
-
-router.get("/book", (req, res) => {
-  res.render("book");
+router.get("/listYourSport", isLoggedIn, (req, res) => {
+  res.render("listSport", {msg: ""});
   // res.send('These are all the venues')
 });
-
-router.get("/info", (req, res) => {
-  res.render("info");
-  // res.send('These are all the details of the <event>')
-});
-
-router.get("/bookings", (req, res) => {
-  res.render("bookings");
-  // res.send('These are payment page of the <event>')
-});
-
-router.get("/listYourSport", (req, res) => {
-  res.render("listSport");
-  // res.send('These are all the venues')
-});
-
-// // Image Uploading Code - not important
-// router.get('/fileInput', (req, res)=> {
-//   res.render('fileInput');
-// })
 
 // Define the storage for multer
 const storage = multer.diskStorage({
@@ -268,46 +228,49 @@ const upload = multer({ storage: storage }).array("images", 12);
 router.post("/listYourSport", (req, res) => {
   upload(req, res, (err) => {
     if (err) {
-      // Handle the error
       console.error(err);
       return res.status(500).json({ error: "Error uploading file" });
     }
 
-    const {venueName, address, landmark, city, sports, amenities, startTime, endTime, courts, prices, about} = req.body;
+    // Use await to wait for the Venue.findOne() promise to resolve
+    Venue.findOne({ venueName: req.body.venueName }).then((venue) => {
+      if (venue) {
+        return res.render('listSport', { msg: "Venue Name already exists!!" });
+      }
 
-    const newVenue = new Venue({
-      user_id: req.session.user.id,
-      venueName: venueName,
-      address: address,
-      landmark: landmark,
-      city: city,
-      sports: sports,
-      amenities: amenities,
-      startTime: startTime,
-      endTime: endTime,
-      courts: courts,
-      prices: prices,
-      about: about,
-      images: req.files.map((file) => file.filename),
-    });
+      const { venueName, address, landmark, city, sports, amenities, startTime, endTime, courts, prices, about } = req.body;
 
-    // Save the new venue entry to the database
-    newVenue
-      .save()
-      .then((savedVenue) => {
-        // Handle success
-        console.log("Venue saved to the database:", savedVenue);
-        res.redirect('/myprofile');
-        // res.status(200).send("The form submitted successfully");
-      })
-      .catch((error) => {
-        // Handle error
-        console.error("Error saving venue to the database:", error);
-        res.status(500).json({ error: "Error saving venue to the database" });
+      const newVenue = new Venue({
+        user_id: req.session.user.id,
+        venueName: venueName,
+        address: address,
+        landmark: landmark,
+        city: city,
+        sports: sports,
+        amenities: amenities,
+        startTime: startTime,
+        endTime: endTime,
+        courts: courts,
+        prices: prices,
+        about: about,
+        images: req.files.map((file) => file.filename),
       });
+
+      // Save the new venue entry to the database
+      return newVenue.save();
+    })
+    .then((savedVenue) => {
+      // Handle success
+      res.redirect('/myprofile');
+    })
+    .catch((error) => {
+      // Handle error
+      console.error(error);
+      res.status(500).json({ error: "Error processing the request" });
+    });
   });
 });
 
 // Exports
-
 module.exports = router;
+

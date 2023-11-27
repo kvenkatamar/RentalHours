@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/images/logo.ico" type="image/x-icon">
     <title>Bookings</title>
 
     <link rel="stylesheet" href="/stylesheets/book.css">
@@ -23,30 +24,29 @@
 <body>
 <%- include('header.ejs') %>
     <div>
-        <!-- Filter Div -->
+        <!-- Filter Div
         <div class="bottom-navbar">
-            <!-- Types Div -->
             <div class="types">
                 <button onclick="changeType(this)">Venues</button>
                 <button onclick="changeType(this)">Coaching</button>
                 <button onclick="changeType(this)">Events</button>
                 <button onclick="changeType(this)">Deals</button>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <!-- Body Section -->
     <div class="content">
         <div class="cards-container">
             <% for (const venue of venues) { %>
-                <div class="card" onclick="location.href = '/info'">
+                <div class="card" onclick="location.href = `/venues?venue_id=<%= venue.id %>`">
                     <div class="card-image">
-                        <img src="/images/<%= venue.images %>.png" alt="">
+                        <img src="/images/uploads/<%= venue.images[0] %>" alt="">
                     </div>
                     <div class="card-info">
                         <div class="club-info">
-                            <p><%= venue.venue_name %></p>
-                            <p><img src="/images/star.png" alt="Star Icon"> 5.00 rating</p>
+                            <p><%= venue.venueName %></p>
+                            <p><img src="/images/star.png" alt="Star Icon"> <%= venue.rating %> rating</p>
                         </div>
                         <p><%= venue.city %></p>
                         <div class="icons">
