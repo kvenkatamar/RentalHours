@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking Platform</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .container {
+        margin-top: 30px;
+        max-width: 90%;
+      }
+
+      .cover-page {
+        position: relative;
+        height: 80vh;
+        background: url("/images/batminton.jpg") center/cover no-repeat;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .cover-text {
+        font-size: 2em;
+        margin-bottom: 20px;
+        /* font-weight: bolder; */
+      }
+
+      .cover-text h1 {
+        font-size: 2.5em;
+      }
+
+      .book-button {
+        padding: 10px 20px;
+        font-size: 1.5em;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .features-container {
+        padding: 50px 20px;
+        background-color: #f8f9fa;
+      }
+
+      .feature {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .feature img {
+        max-width: 100px;
+        margin-bottom: 10px;
+      }
+
+      .testimonials-container {
+        padding: 50px 20px;
+      }
+
+      .testimonial {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .testimonial img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+      }
+
+      .stars {
+        color: #f8d150;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('header.ejs') %>
+
+    <div class="cover-page">
+      <div class="cover-text">
+        <h1>Welcome to Our Booking Platform</h1>
+        <p>Find the perfect venue to play and enjoy your favorite sports!</p>
+      </div>
+      <button class="book-button" onclick="window.location.href = '/venues'">Book Now</button>
+    </div>
+
+    <div class="container features-container">
+      <h2 class="text-center mb-4">Our Features</h2>
+      <div class="row">
+        <div class="col-md-4 feature">
+          <img src="icon1.png" alt="Feature Icon" />
+          <h4>Multiple Venues</h4>
+          <p>Choose from a variety of sports venues.</p>
+        </div>
+        <div class="col-md-4 feature">
+          <img src="icon2.png" alt="Feature Icon" />
+          <h4>Easy Booking</h4>
+          <p>Simple and quick booking process.</p>
+        </div>
+        <div class="col-md-4 feature">
+          <img src="icon3.png" alt="Feature Icon" />
+          <h4>Customer Reviews</h4>
+          <p>Read reviews and ratings from other users.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container testimonials-container">
+      <h2 class="text-center mb-4">What Our Users Say</h2>
+      <div class="row">
+        <div class="col-md-4 testimonial">
+          <img src="user1.jpg" alt="User Profile" />
+          <p class="stars">★★★★★</p>
+          <p>"Great service! Loved the experience."</p>
+          <p>- John Doe</p>
+        </div>
+        <div class="col-md-4 testimonial">
+          <img src="user2.jpg" alt="User Profile" />
+          <p class="stars">★★★★☆</p>
+          <p>"Good variety of venues available."</p>
+          <p>- Jane Smith</p>
+        </div>
+        <div class="col-md-4 testimonial">
+          <img src="user3.jpg" alt="User Profile" />
+          <p class="stars">★★★★★</p>
+          <p>"Excellent customer support!"</p>
+          <p>- Alex Johnson</p>
+        </div>
+      </div>
+    </div>
+
+    <%- include('footer.ejs') %>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

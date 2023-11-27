@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      .profile-container {
+        max-width: 400px;
+        margin: 50px auto;
+        text-align: center;
+      }
+
+      .profile-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: block;
+        cursor: pointer;
+      }
+
+      .profile-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .profile-details label {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 5px;
+      }
+
+      .profile-details input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+      }
+
+      .profile-actions {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+      }
+
+      .edit-buttons button {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('header.ejs') %>
+
+    <div class="container profile-container">
+      <div class="position-relative">
+        <img
+          src="default-profile-photo.jpg"
+          alt="Profile Photo"
+          class="profile-photo"
+          id="profilePhoto"
+          onclick="showEditOptions()"
+        />
+        <div class="edit-options">
+          <button class="btn btn-primary" onclick="updateProfilePhoto()">
+            Update Profile
+          </button>
+          <button class="btn btn-danger" onclick="removeProfilePhoto()">
+            Remove Profile
+          </button>
+        </div>
+      </div>
+
+      <div class="profile-details">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" value="John" disabled />
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" value="Doe" disabled />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" value="john.doe@example.com" disabled />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" value="********" disabled />
+
+        <div class="edit-buttons">
+          <button class="btn btn-primary" onclick="handleEditClick()">
+            Edit
+          </button>
+          <button
+            class="btn btn-success"
+            id="updateBtn"
+            style="display: none"
+            onclick="handleUpdateClick()"
+          >
+            Update
+          </button>
+          <button
+            class="btn btn-danger"
+            style="display: none"
+            onclick="handleCancelClick()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <form action="" method="post" id="myprofile">
+        <div class="profile-actions">
+          <button class="btn btn-info" onclick="handleBookingsClick()">
+            My Bookings
+          </button>
+          <button class="btn btn-warning" onclick="handleFeedbackClick()">
+            Feedback
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <%- include('footer.ejs') %>
+    <script>
+      function handleEditClick() {
+        document.querySelectorAll(".profile-details input").forEach((input) => {
+          input.disabled = false;
+        });
+
+        document.getElementById("profilePhoto").style.cursor = "pointer";
+        document.getElementById("updateBtn").style.display = "inline-block";
+        document.querySelector(
+          ".edit-buttons button.btn-danger"
+        ).style.display = "inline-block";
+        document.querySelector(
+          ".edit-buttons button.btn-primary"
+        ).style.display = "none";
+      }
+
+      function handleUpdateClick() {
+        // Implement logic to update user details
+        alert("User details updated successfully!");
+        resetEditState();
+      }
+
+      function handleCancelClick() {
+        resetEditState();
+      }
+
+      function handleProfilePhotoClick() {
+        // Implement logic to handle profile photo click (upload/remove)
+        alert("Handle profile photo click");
+      }
+
+      function handleBookingsClick() {
+        // Implement logic for "My Bookings" button click
+        document.getElementById("myprofile").action = "/myprofile/bookings";
+        document.getElementById("myprofile").method = "get";
+        document.getElementById("myprofile").submit();
+        // alert("Viewing My Bookings");
+      }
+
+      function handleFeedbackClick() {
+        // Implement logic for "Feedback" button click
+        document.getElementById("myprofile").action = "/myprofile/feedback";
+        document.getElementById("myprofile").method = "get";
+        document.getElementById("myprofile").submit();
+        // alert("Submitting Feedback");
+      }
+
+      function resetEditState() {
+        document.querySelectorAll(".profile-details input").forEach((input) => {
+          input.disabled = true;
+        });
+
+        document.getElementById("profilePhoto").style.cursor = "default";
+        document.getElementById("updateBtn").style.display = "none";
+        document.querySelector(
+          ".edit-buttons button.btn-danger"
+        ).style.display = "none";
+        document.querySelector(
+          ".edit-buttons button.btn-primary"
+        ).style.display = "inline-block";
+      }
+      function showEditOptions() {
+        document.querySelector(".edit-options").style.display = "flex";
+      }
+
+      function hideEditOptions() {
+        document.querySelector(".edit-options").style.display = "none";
+      }
+
+      function updateProfilePhoto() {
+        // Implement logic to update profile photo (e.g., trigger file input)
+        alert("Updating profile photo");
+        hideEditOptions();
+      }
+
+      function removeProfilePhoto() {
+        // Implement logic to remove profile photo
+        document.getElementById("profilePhoto").src =
+          "default-profile-photo.jpg";
+        alert("Profile photo removed");
+        hideEditOptions();
+      }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+
+body{
+    height: 100vh;
+}
+
+.booking{
+    margin: 50px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.booking-details-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h4 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.address {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.show{
+    display: block;
+}
+
+.custom-dropdown-content a {
+    color: #333;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.custom-dropdown-content a:hover {
+    background-color: #f0f0f0;
+}
+
+.date-picker,
+.time-picker {
+    margin-bottom: 15px;
+}
+
+.duration-picker {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.duration-icon {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.cart-button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}

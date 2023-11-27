@@ -1,0 +1,26 @@
+
+
+.nav-item{
+    margin: 0px 20px;
+}
+
+.city-link {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 2px solid grey; /* Bootstrap primary color */
+    border-radius: 8px; /* Adjust the border-radius as needed */
+    color: grey; /* Bootstrap primary color */
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    width: 18rem;
+}
+
+.city-link:hover {
+    background-color: #ccc; /* Bootstrap primary color */
+    color: #fff; /* White text on hover */
+    text-decoration: none;
+}
+
+.city-link i {
+    margin-right: 8px;
+}

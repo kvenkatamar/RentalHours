@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Booking Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/417c425247.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/stylesheets/payment.css">
+</head>
+<body>
+
+<%- include('header.ejs') %>
+
+<div class="booking">
+    <div class="booking-details-box">
+        <h4 class="court-name">Name of the Court</h4>
+        <p class="court-address">123 Court Street, City, Country</p>
+
+        <!-- Sports Dropdown -->
+        <div class="custom-dropdown sports-dropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" id="sportsDropdown" onclick="toggleDropdown('sports-dropdown-content')" aria-haspopup="true" aria-expanded="false">
+                Select Sport
+            </button>
+            <div class="custom-dropdown-content sports-dropdown-content" aria-labelledby="sportsDropdown">
+                <a class="dropdown-item" href="#"><img src="icon-football.png" alt="Football"> Football</a>
+                <a class="dropdown-item" href="#"><img src="icon-basketball.png" alt="Basketball"> Basketball</a>
+                <!-- Add more sports as needed -->
+            </div>
+        </div>
+
+        <!-- Date Input -->
+        <div class="form-group date-picker">
+            <label for="dateInput">Select Date</label>
+            <input type="date" class="form-control" id="dateInput">
+        </div>
+
+        <!-- Start Time Custom Dropdown -->
+        <div class="custom-dropdown time-picker">
+            <button class="btn btn-light dropdown-toggle" type="button" id="timeDropdown" onclick="toggleDropdown('time-dropdown-content')" aria-haspopup="true" aria-expanded="false">
+                Select Start Time
+            </button>
+            <div class="custom-dropdown-content time-dropdown-content" aria-labelledby="timeDropdown">
+                <!-- Add available times as needed -->
+                <a class="dropdown-item" href="#">9:00 AM</a>
+                <a class="dropdown-item" href="#">10:00 AM</a>
+                <!-- Add more times as needed -->
+            </div>
+        </div>
+
+        <!-- Duration Picker -->
+        <div class="duration-picker">
+            <span class="duration-icon" onclick="decreaseDuration()"><i class="fa-solid fa-circle-minus" style="color: #008009;"></i></span>
+            <span class="duration">1 Hr</span>
+            <span class="duration-icon" onclick="increaseDuration()"><i class="fa-solid fa-circle-plus" style="color: #008009;"></i></span>
+        </div>
+
+        <!-- Court Dropdown -->
+        <div class="custom-dropdown court-dropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" id="courtDropdown" onclick="toggleDropdown('court-dropdown-content')" aria-haspopup="true" aria-expanded="false">
+                Select Court
+            </button>
+            <div class="custom-dropdown-content court-dropdown-content" aria-labelledby="courtDropdown">
+                <!-- Add available courts as needed -->
+                <a class="dropdown-item" href="#">Court A</a>
+                <a class="dropdown-item" href="#">Court B</a>
+                <!-- Add more courts as needed -->
+            </div>
+        </div>
+
+        <!-- Add to Cart Button -->
+        <button class="cart-button" onclick="addToCart()">Add to Cart</button>
+    </div>
+</div>
+
+<%- include('footer.ejs') %>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script defer src="/scripts/payment.js"></script>
+
+</body>
+</html>

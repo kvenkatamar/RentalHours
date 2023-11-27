@@ -1,0 +1,73 @@
+<!-- header.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Your Website</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/header.css"> <!-- Add your custom CSS file here -->
+    <!-- Add these lines for jQuery and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <a class="navbar-brand" href="#">
+        <img src="path/to/your/logo.png" alt="Your Logo" height="30">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+                <li class="nav-item">
+                    <!-- City Link -->
+                    <a href="/venues" class="city-link">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <% if (session.city) { %>
+                            <span class="city-name"><%= session.city %></span>
+                        <% } else { %>                            
+                            <span class="city-name">City Name</span>
+                        <% } %>
+                    </a>
+                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">HOME</a>
+            </li>
+            <li class="nav-item">
+                <% if (session.city) { %>
+                    <a class="nav-link" href="/venues/<%= session.city %>/all">BOOK</a>
+                <% } else { %>
+                    <a class="nav-link" href="/venues">BOOK</a>
+                <% } %>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/listYourSport">LIST SPORT</a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="/learn">LEARN</a>
+            </li> -->
+            <!-- ... other non-authenticated links ... -->
+            <% if (!session.isAuth) { %>
+                <li class="nav-item">
+                    <a class="btn btn-info rounded-pill px-4" href="/login">Login/Signup</a>
+                </li>
+            <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myprofile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            <% } %>
+        </ul>
+    </div>    
+    
+</nav>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

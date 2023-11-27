@@ -1,0 +1,155 @@
+/* Add your additional custom styles here */
+body {
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+.rating-popup {
+  /* /* Add styles for the rating popup  */
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.stars {
+  font-size: 24px;
+  color: #ddd;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: auto;
+}
+
+.stars:hover {
+  color: #ffdb58; /* Gold color on hover */
+}
+
+.filled {
+  color: #ffdb58; /* Gold color for filled stars */
+}
+
+.submit-btn, .close-btn {
+  background-color: #4caf50; /* Green color for buttons */
+  color: #fff;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close-btn {
+  background-color: #ccc; /* Grey color for close button */
+  margin-left: 10px;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+}
+
+p{
+  margin: 0;
+}
+
+h1{
+  font-weight: bolder;
+}
+
+.breadcrumbs{
+  margin-left: 20px;
+}
+
+.venue-details{
+  margin: 30px;
+}
+
+.venue-details .row{
+  margin: 30px auto 0px 0px;
+  display: flex;
+  gap: 40px;
+}
+
+.col-md-7{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0px;
+}
+
+.venue-details img {
+  width: 70rem;
+  height: 25rem;
+  border-radius: 30px;
+}
+
+.mt-4{
+  border: 1px solid #efefef;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+}
+
+.mt-4 b{
+  font-size: 20px;
+}
+
+
+.sports, .amenities, .about, .location{
+  font-size: 20px;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: center;
+}
+
+.sports .sport{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 10px;
+  border: 1px solid rgb(205, 205, 205);
+  margin-right: 25px;
+  border-radius: 10px;
+  background-color: #efefef;
+}
+
+.amenities{
+  justify-content: space-between;
+}
+
+.book-btn{
+  width: 100%;
+  margin: 20px 0px;
+  height: 50px;
+}
+
+.other-btn button{  
+  gap: 10px;
+  width: 49%;
+  margin-left: auto;
+  align-items: center;
+}
+
+.other-btn{
+  height: 50px;
+}
+
+.location iframe{
+  margin-top: 20px;
+  width: 100%;
+  border-radius: 20px;
+}
+
+/* Add more styles for other containers and elements as needed */

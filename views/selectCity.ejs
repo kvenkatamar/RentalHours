@@ -1,0 +1,58 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sports Complex Finder</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/selectCity.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+
+<div class="background-image">
+    
+</div>
+
+
+<%- include('header.ejs') %>
+
+
+<div class="container-fluid main-container">
+    <form id="sportsComplexForm" action="/venues" method="post" class="glassy-container">
+        <h1>Find Sports Complexes</h1>
+        <input type="hidden" id="selectedCityInput"  name="city" value="">
+        
+        
+        <div class="search-container">
+            
+            <input type="text" name="city" placeholder="Search..." id="searchBox">
+            <i class="fas fa-search search-icon"></i>
+            <i class="fas fa-map-marker-alt detect-icon" onclick="detectLocation()"></i>
+        </div>
+        <ul id="resultList">
+        </ul>
+        <div class="popular">
+            <h3>Popular Places</h3>
+            <ul class="cities">
+                <li><a href="#" onclick="submitCity('Madhapur')">Madhapur</a></li>
+                <li><a href="#" onclick="submitCity('Hyderabad')">Hyderabad</a></li>
+                <li><a href="#" onclick="submitCity('Banjara+Hills')">Banjara Hills</a></li>
+                <li><a href="#" onclick="submitCity('Hi.Tech+City')">Hi.Tech City</a></li>
+                <li><a href="#" onclick="submitCity('Jublie+Hills')">Jublie Hills</a></li>
+            </ul>
+        </div>
+    </form>
+</div>
+
+
+<%- include('footer.ejs') %>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/scripts/selectCity.js"></script>
+</body>
+</html>

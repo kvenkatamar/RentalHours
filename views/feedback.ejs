@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback Page</title>
+    <style>
+      body
+      {
+          font-family:Arial, Helvetica, sans-serif;
+          /* display:flex;
+          justify-content: center;
+          align-items: center; */
+          height: 100vh;
+          background-color: rgb(53,156,70);
+      }
+      body div{
+        display:flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+      }
+      form
+      {
+          max-width: fit-content;
+          background-color: #fff;
+          padding:20px;
+          border-radius:8px;
+          box-shadow:0 0 10px rgba(0,0,0,0.1);
+      }
+      label
+      {
+          display: block;
+          margin-bottom: 8px;
+      }
+      input[type="text"],textarea
+      {
+          width:100%;
+          padding:8px;
+          margin-bottom: 16px;
+          box-sizing:border-box;
+      }
+      .stars
+      {
+          display:flex;
+          gap:4.5px;
+      }
+      .star
+      {
+          font-size:24px;
+          cursor: pointer;
+          color:#ccc;
+      }
+      .star.active,.star:hover
+      {
+          color:goldenrod;
+      }
+      #feedbackText
+      {
+          width: 100%;
+          padding:8px;
+          box-sizing: border-box;
+      }
+      #submitBtn {
+          background-color: #4caf50;
+          color: #fff;
+          padding: 10px 30px;
+          border: none;
+          border-radius: 4px;
+          font-size:17px;
+        }
+        #submitBtn:hover
+        {
+            cursor:pointer;
+            background-color: rgb(15, 149, 221);
+            color:white;
+        }
+        #submitBtn i
+        {
+            transition:transform 0.3s ease-in-out;
+        }
+        #submitBtn:hover i
+        {
+            transform:translateX(10px);
+        }
+        .box {
+            width: 200px;
+            padding:10px;
+            border: 2px solid #ccc; 
+            outline: none;
+            border-radius: 5px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+    
+        .box:focus {
+            border-color: #04ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 17, 0.8); 
+        }
+  </style>
+  </head>
+  <body>
+    <%- include('header.ejs') %>
+
+
+    <div>
+        <h2 style="font-size: 20px;">PLEASE GIVE US, YOUR VALUABLE FEEDBACK</h2>
+      <form id="feedbackForm">
+        <label for="name">Name:</label>
+        <input type="text" class="box" id="name" name="name" required>
+    
+        <label for="email">Email:</label>
+        <input type="text" id="email" class="box" name="email" required>
+    
+        <label for="rating">Rating:</label>
+        <div class="stars" id="ratingStars">
+          <span class="star" onclick="rate(1)">&#9733;</span>
+          <span class="star" onclick="rate(2)">&#9733;</span>
+          <span class="star" onclick="rate(3)">&#9733;</span>
+          <span class="star" onclick="rate(4)">&#9733;</span>
+          <span class="star" onclick="rate(5)">&#9733;</span>
+        </div>
+    
+        <label for="feedbackText">Feedback:</label>
+        <textarea id="feedbackText" class="box" name="feedback" rows="4" required></textarea>
+    
+        <button type="button" id="submitBtn" onclick="submitForm()">Submit <i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+      </form>
+    
+    </div>
+
+    
+  
+  
+    <%- include('footer.ejs') %>
+    <script>
+        let countrating= 0;
+      function rate(stars)
+      {
+        countrating=stars;
+        const allStars=document.querySelectorAll('.star');
+        allStars.forEach(star=> star.classList.remove('active'));
+    
+        for(let i=0;i<stars;i++)
+        {
+            allStars[i].classList.add('active');
+        }
+      }
+    function validateEmail(email) 
+    {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+        }
+      
+    function submitForm() 
+    {
+          const name = document.getElementById('name').value;
+          const email = document.getElementById('email').value;
+          const feedback = document.getElementById('feedbackText').value;
+      
+          if (!validateEmail(email)) {
+            alert('Please enter a valid email address.');
+            return;
+          }
+    
+      
+          console.log('Name:', name);
+          console.log('Email:', email);
+          console.log('Rating:', countrating);
+          console.log('Feedback:', feedback);
+          alert("Feedback submission successful");
+        //for check
+        }
+      </script>
+  </body>
+</html>

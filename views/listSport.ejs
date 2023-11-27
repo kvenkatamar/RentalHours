@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/stylesheets/listSport.css" />
+    <title>Venue Registration Form</title>
+  </head>
+  <style>
+  </style>
+  <body>
+
+    <%- include('header') %>
+
+    <div class="container mt-5 mb-5">
+      <h2 class="text-center mb-4">Venue Registration Form</h2>
+      <form
+        id="venueForm"
+        action="/listYourSport"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <!-- Venue Name -->
+        <div class="form-group">
+          <label for="venueName">Venue Name:</label>
+          <input
+            required
+            type="text"
+            class="form-control"
+            id="venueName"
+            name="venueName"
+          />
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+          <label for="address">Address:</label>
+          <input
+            required
+            type="text"
+            class="form-control"
+            id="address"
+            name="address"
+          />
+        </div>
+
+        <!-- Landmark -->
+        <div class="form-group">
+          <label for="landmark">Landmark:</label>
+          <input
+            required
+            type="text"
+            class="form-control"
+            id="landmark"
+            name="landmark"
+          />
+        </div>
+
+        <!-- City -->
+        <div class="form-group">
+          <label for="city">City:</label>
+          <input
+            required
+            type="text"
+            class="form-control"
+            id="city"
+            name="city"
+          />
+        </div>
+
+        <!-- ==================================================
+                    SPORTS AND AMENITIES DROPDOWN(Next 4 DIVs)
+            ===================================================== -->
+        <!-- Container for dynamically added checkboxes -->
+        <div class="form-group" id="sportsContainer">
+          <label for="sports">Sports:</label>
+        </div>
+
+        <div class="form-group" id="amenitiesContainer">
+          <label for="amenities">Amenities:</label>
+        </div>
+
+        <!-- Start Time -->
+        <div class="form-group">
+          <label for="startTime">Start Time:</label>
+          <input
+            required
+            type="time"
+            class="form-control"
+            id="startTime"
+            name="startTime"
+          />
+        </div>
+
+        <!-- End Time -->
+        <div class="form-group">
+          <label for="endTime">End Time:</label>
+          <input
+            required
+            type="time"
+            class="form-control"
+            id="endTime"
+            name="endTime"
+          />
+        </div>
+
+        <!-- ==================================================
+                        COURT AND PRICE INPUT FIELDS
+            ===================================================== -->
+
+        <!-- Container for dynamically added courts -->
+        <div class="container">
+          <div class="row">
+            <!-- Left Half - Courts -->
+            <div class="col-md-6">
+              <div id="courtsContainer">
+                <div class="row mb-2" id="court1">
+                  <div class="col-md-12">
+                    <label for="court">COURT NAME: </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="courts"
+                      placeholder="Court 1"
+                      required
+                    />
+                  </div>
+                </div>
+                <!-- Additional court rows can be added dynamically -->
+              </div>
+            </div>
+
+            <!-- Right Half - Prices -->
+            <div class="col-md-6">
+              <div id="priceContainer">
+                <div class="row mb-2" id="priceCourtContainer1">
+                  <div class="col-md-6">
+                    <label for="price">PRICE/hr: </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="priceCourt$1"
+                      name="prices"
+                      required
+                    />
+                  </div>
+                </div>
+                <!-- Additional price rows can be added dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Button at the Center -->
+          <div class="row justify-content-center">
+            <!-- Button to add new courts -->
+            <button type="button" class="btn btn-success" id="addCourt">
+              Add Court
+            </button>
+          </div>
+        </div>
+
+        <!-- About -->
+        <div class="form-group">
+          <label for="about">About:</label>
+          <textarea
+            required
+            class="form-control"
+            id="about"
+            name="about"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <!-- Upload Images -->
+        <div class="form-group">
+          <label for="imageUpload">Upload Images:</label>
+          <input
+            required
+            type="file"
+            class="form-control-file"
+            id="imageUpload"
+            name="images"
+            multiple
+          />
+          <!-- <div id="uploadedImagesContainer" class="mt-2">
+                </div> -->
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+
+    
+    <%- include('footer') %>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="/scripts/listSport.js"></script>
+  </body>
+</html>
