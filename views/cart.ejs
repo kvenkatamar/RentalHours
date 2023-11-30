@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/images/logo.ico" type="image/x-icon">
+    <title>Booking Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .booking-container, .cart-container {
+            margin-top: 50px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            max-height: 500px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .time-picker {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .duration-picker {
+            display: flex;
+            align-items: center;
+        }
+
+        .duration-icon {
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .cart-container{
+            overflow-y: scroll;
+        }
+
+        .cart-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .cart-item h5 {
+            margin-bottom: 5px;
+        }
+
+        .cart-item p {
+            margin: 0;
+        }
+
+        .price {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Add your header include here -->
+    <%- include('header') %>
+    
+    
+<div class="container">
+  <form action="" method="post">
+      <div class="row">
+          <!-- Booking Container -->
+          <div class="col-md-6">
+            <div class="booking-container">
+                <h2>Book a Venue</h2>
+                <div class="form-group">
+                    <label for="sport">Select Sport</label>
+                    <select id="sport" name="sport" class="form-control">
+                        <option value="football">Football</option>
+                        <option value="tennis">Tennis</option>
+                        <option value="basketball">Basketball</option>
+                        <option value="volleyball">Volleyball</option>
+                        <!-- Add more sports as needed -->
+                    </select>
+                </div>
+        
+                <div class="form-group">
+                    <label for="date">Select Date</label>
+                    <input type="date" id="date" name="date" class="form-control">
+                </div>
+        
+                <div class="form-group">
+                    <label for="startTime">Select Start Time</label>
+                    <select id="startTime" name="startTime" class="form-control"></select>
+                    <!-- Script will dynamically populate the start time options -->
+                </div>
+        
+                <div class="form-group">
+                    <label for="duration">Select Duration</label>
+                    <div class="time-picker">
+                        <div class="duration-picker">
+                            <span class="duration-icon" onclick="decreaseDuration()">-</span>
+                            <span id="duration">1 Hr</span>
+                            <span class="duration-icon" onclick="increaseDuration()">+</span>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="court">Select Court</label>
+                    <select id="court" name="court" class="form-control">
+                        <option value="courtA" data-price="20">Court A - $20</option>
+                        <option value="courtB" data-price="30">Court B - $30</option>
+                        <option value="courtC" data-price="25">Court C - $25</option>
+                        <option value="courtD" data-price="35">Court D - $35</option>
+                        <!-- Add more courts as needed with corresponding prices -->
+                    </select>
+                </div>
+        
+                <button class="btn btn-primary mt-3" onclick="addToCart()">Add to Cart</button>
+            </div>
+        </div>        
+
+          <!-- Cart Container -->
+          <div class="col-md-6">
+              <div class="cart-container">
+                  <h2>Your Cart</h2>
+                  <div id="cartItems"></div>
+              </div>
+              <input type="hidden" name="amount" value="0" id="amount">
+              <input type="submit" value="PAY NOW" id="payNowButton" class="btn btn-success mb-5 mt-3 ml-auto mr-auto w-75" style="display: none;">
+          </div>
+      </div>
+  </form>
+</div>
+
+<%- include('footer') %>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Add this script section at the end of your HTML file, before the closing </body> tag -->
+<script>
+    const currentDate = new Date();
+    const currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false, hour: 'numeric', minute: 'numeric' });
+    const currentDateTime = currentDate.toISOString().split('T')[0];
+
+    // Set min attribute for date input to the current date
+    document.getElementById('date').setAttribute('min', currentDateTime);
+
+    // Set options for the start time dropdown
+    const startTimeDropdown = document.getElementById('startTime');
+    const startTimeOptions = generateTimeOptions(currentTime);
+    startTimeOptions.forEach(option => startTimeDropdown.add(option));
+
+    // Function to generate time options with 1-hour difference from the current time
+    function generateTimeOptions(currentTime) {
+        const options = [];
+        const currentTimeValue = convertTimeToValue(currentTime);
+
+        for (let i = currentTimeValue; i < 24; i++) {
+            const time = convertValueToTime(i);
+            const option = new Option(time, time);
+            options.push(option);
+        }
+
+        return options;
+    }
+
+    // Function to convert time to value for comparison
+    function convertTimeToValue(time) {
+        const [hour, minute] = time.split(':');
+        return parseInt(hour) * 60 + parseInt(minute);
+    }
+
+    // Function to convert value back to time
+    function convertValueToTime(value) {
+        const hours = Math.floor(value / 60);
+        const minutes = value % 60;
+        return `${hours}:${minutes === 0 ? '00' : minutes}`;
+    }
+
+    // Example decrease duration function
+    function decreaseDuration() {
+        const durationElement = document.getElementById('duration');
+        let currentDuration = parseInt(durationElement.innerText);
+
+        // Check if the duration is greater than the minimum allowed duration (e.g., 30 mins)
+        if (currentDuration > 30) {
+            currentDuration -= 30;
+            durationElement.innerText = currentDuration + ' Mins';
+        }
+    }
+
+    // Example increase duration function
+    function increaseDuration() {
+        const durationElement = document.getElementById('duration');
+        let currentDuration = parseInt(durationElement.innerText);
+
+        // Check if the duration is less than the maximum allowed duration (e.g., 2 hrs)
+        if (currentDuration < 120) {
+            currentDuration += 30;
+            durationElement.innerText = currentDuration + ' Mins';
+        }
+    }
+
+    function addToCart() {
+        // Get values from the form
+        const sport = document.getElementById('sport').value;
+        const date = document.getElementById('date').value;
+        const startTime = document.getElementById('startTime').value;
+        const duration = document.getElementById('duration').innerText;
+        const courtSelect = document.getElementById('court');
+        const court = courtSelect.value;
+        const price = parseFloat(courtSelect.options[courtSelect.selectedIndex].getAttribute('data-price'));
+
+        // Check if the selected items are not already in the cart
+        const cartItems = document.querySelectorAll('.cart-item');
+        for (const cartItem of cartItems) {
+            const cartSport = cartItem.querySelector('.sport').innerText;
+            const cartDate = cartItem.querySelector('.date').innerText;
+            const cartStartTime = cartItem.querySelector('.startTime').innerText;
+            const cartDuration = cartItem.querySelector('.duration').innerText;
+            const cartCourt = cartItem.querySelector('.court').innerText;
+
+            if (sport === cartSport && date === cartDate && startTime === cartStartTime && duration === cartDuration && court === cartCourt) {
+                alert('Item already in the cart.');
+                return;
+            }
+        }
+
+        // Create a card item for the cart
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.innerHTML = `
+            <h5 class="sport">${sport}</h5>
+            <p class="date">Date: ${date}</p>
+            <p class="startTime">Start Time: ${startTime}</p>
+            <p class="duration">Duration: ${duration}</p>
+            <p class="court">Court: ${court} - $${price.toFixed(2)}</p>
+            <button class="btn btn-danger btn-sm" onclick="deleteCartItem(this)">Delete</button>
+        `;
+
+        // Append the card item to the cart
+        document.getElementById('cartItems').appendChild(cartItem);
+
+        // Enable the selected option in the court dropdown
+        courtSelect.options[courtSelect.selectedIndex].disabled = false;
+
+        calculateTotalPrice();
+    }
+
+    // Function to delete a cart item
+    function deleteCartItem(button) {
+        const cartItem = button.closest('.cart-item');
+
+        // Enable the selected option in the court dropdown
+        const courtValue = cartItem.querySelector('.court').innerText.split(' ')[1];
+        const courtOption = document.querySelector(`#court option[value="${courtValue}"]`);
+        if (courtOption) {
+            courtOption.disabled = false;
+        }
+
+        // Remove the cart item from the cart
+        cartItem.remove();
+        
+        calculateTotalPrice();
+    }
+
+    // Example function to calculate the total price and show Pay Now button
+    function calculateTotalPrice() {
+        const cartItems = document.querySelectorAll('.cart-item');
+        let totalPrice = 0;
+
+        for (const cartItem of cartItems) {
+            const priceString = cartItem.querySelector('.court').innerText.split(' ')[3];
+            const price = parseFloat(priceString.substring(1));
+            totalPrice += price;
+        }
+
+        // Display the total price and show Pay Now button
+        const payNowButton = document.getElementById('payNowButton');
+        payNowButton.value = `PROCEED TO PAY $${totalPrice}`;
+        const amount = document.getElementById("amount");
+        amount.value = totalPrice;
+        if(amount.value !== '0'){
+            payNowButton.style.display = 'block';
+        }
+        else{
+            payNowButton.style.display = 'none';
+        }
+    }
+</script>
+
+<!-- Add the following Pay Now button below the cart items -->
+
+</body>
+</html>

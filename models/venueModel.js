@@ -11,6 +11,7 @@ const venueSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
+        default: 0,
     },
     address: {
         type: String,

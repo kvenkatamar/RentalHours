@@ -3,184 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/images/logo.ico" type="image/x-icon">
-    <title>Booking Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-
-        .booking-container, .cart-container {
-            margin-top: 50px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 12px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .time-picker {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .duration-picker {
-            display: flex;
-            align-items: center;
-        }
-
-        .duration-icon {
-            cursor: pointer;
-            margin: 0 5px;
-        }
-
-        .cart-item {
-            background-color: #f9f9f9;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-        }
-
-        .cart-item h5 {
-            margin-bottom: 5px;
-        }
-
-        .cart-item p {
-            margin: 0;
-        }
-    </style>
+    <title>Payment Page</title>
 </head>
 <body>
-
-    <%- include('header') %>
-
-<div class="container">
-    <div class="row">
-        <!-- Booking Container -->
-        <div class="col-md-6">
-            <div class="booking-container">
-                <h2>Book a Venue</h2>
-                <label for="sport">Select Sport</label>
-                <select id="sport" name="sport">
-                    <option value="football">Football</option>
-                    <option value="tennis">Tennis</option>
-                    <!-- Add more sports as needed -->
-                </select>
-
-                <label for="date">Select Date</label>
-                <input type="date" id="date" name="date">
-
-                <label for="startTime">Select Start Time</label>
-                <input type="text" id="startTime" name="startTime" readonly>
-                <!-- Add a script to show time picker on input click -->
-
-                <div class="time-picker">
-                    <label for="duration">Select Duration</label>
-                    <div class="duration-picker">
-                        <span class="duration-icon" onclick="decreaseDuration()">-</span>
-                        <span id="duration">1 Hr</span>
-                        <span class="duration-icon" onclick="increaseDuration()">+</span>
-                    </div>
-                </div>
-
-                <label for="court">Select Court</label>
-                <select id="court" name="court">
-                    <option value="courtA">Court A</option>
-                    <option value="courtB">Court B</option>
-                    <!-- Add more courts as needed -->
-                </select>
-
-                <button class="btn btn-primary mt-3" onclick="addToCart()">Add to Cart</button>
-            </div>
-        </div>
-
-        <!-- Cart Container -->
-        <div class="col-md-6">
-            <div class="cart-container">
-                <h2>Your Cart</h2>
-                <div id="cartItems"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<%- include('footer') %>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Add this script section at the end of your HTML file, before the closing </body> tag -->
-<script>
-    // Show time picker on input click
-    document.getElementById('startTime').addEventListener('click', showTimePicker);
-
-    // Example time picker function
-    function showTimePicker() {
-        // Implement your time picker logic here
-        alert('Time Picker Placeholder');
-    }
-
-    // Example decrease duration function
-    function decreaseDuration() {
-        const durationElement = document.getElementById('duration');
-        let currentDuration = parseInt(durationElement.innerText);
-
-        // Check if the duration is greater than the minimum allowed duration (e.g., 30 mins)
-        if (currentDuration > 30) {
-            currentDuration -= 30;
-            durationElement.innerText = currentDuration + ' Mins';
-        }
-    }
-
-    // Example increase duration function
-    function increaseDuration() {
-        const durationElement = document.getElementById('duration');
-        let currentDuration = parseInt(durationElement.innerText);
-
-        // Check if the duration is less than the maximum allowed duration (e.g., 2 hrs)
-        if (currentDuration < 120) {
-            currentDuration += 30;
-            durationElement.innerText = currentDuration + ' Mins';
-        }
-    }
-
-    // Example addToCart function
-    function addToCart() {
-        // Get values from the form
-        const sport = document.getElementById('sport').value;
-        const date = document.getElementById('date').value;
-        const startTime = document.getElementById('startTime').value;
-        const duration = document.getElementById('duration').innerText;
-        const court = document.getElementById('court').value;
-
-        // Create a card item for the cart
-        const cartItem = document.createElement('div');
-        cartItem.classList.add('cart-item');
-        cartItem.innerHTML = `
-            <h5>${sport}</h5>
-            <p>Date: ${date}</p>
-            <p>Start Time: ${startTime}</p>
-            <p>Duration: ${duration}</p>
-            <p>Court: ${court}</p>
-        `;
-
-        // Append the card item to the cart
-        document.getElementById('cartItems').appendChild(cartItem);
-    }
-</script>
-
+    <!-- Booking Container -->
+<form method="POST" action="https://api.razorpay.com/v1/checkout/embedded">
+    <input type="hidden" name="key_id" value="rzp_test_NgvoluByVG6t1J"/>
+    <input type="hidden" name="amount" value="<%= data.amount %>"/>
+    <input type="hidden" name="order_id" value="<%= data.id.replace(/\/$/, '') %>"/>
+    <input type="hidden" name="name" value="Razorpay Gateway"/>
+    <input type="hidden" name="description" value="A Wild Sheep Chase"/>
+    <input type="hidden" name="image" value="https://cdn.razorpay.com/logos/BUVwvgaqVByGp2_large.jpg"/>
+    <input type="hidden" name="prefill[name]" value="Gaurav Kumar"/>
+    <input type="hidden" name="prefill[contact]" value="9123456780"/>
+    <input type="hidden" name="prefill[email]" value="gaurav.kumar@example.com"/>
+    <input type="hidden" name="notes[shipping address]" value="L-16, The Business Centre, 61 Wellfield Road, New Delhi - 110001"/>
+    <input type="hidden" name="callback_url" value="https://rentalhours.onrender.com/bookingVerification"/>
+    <input type="hidden" name="cancel_url" value="https://rentalhours.onrender.com/paymentCancel"/>
+    <button>Pay Now</button>
+  </form>
+    
 </body>
 </html>
