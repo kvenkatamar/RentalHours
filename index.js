@@ -7,6 +7,7 @@ const path  = require('path');
 const session = require('express-session');
 const MongoDBSession = require('connect-mongodb-session')(session);
 
+// hello
 // Establishing a connection to mongodb database using atlas & compass
 
 require('dotenv').config(); // due to security reasons we save port, database url in .env file
